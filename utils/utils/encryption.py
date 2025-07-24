@@ -1,20 +1,22 @@
-from Crypto.Cipher import AES 
+from Crypto.Cipher import AES
 import base64
 
-def pad(text):
-    while len(text) % 16 != 0:
-        text += ' '
-    return text
+# Helper function to ensure key is 16 bytes long
+def pad_key(key):
+    return key.ljust(16)[:16]
 
+# AES Encryption Function
 def encrypt_aes(text, key):
-    key = key[:16].encode('utf-8')  # AES requires 16-byte key
-    text = pad(text).encode('utf-8')
+    key = pad_key(key).encode()
     cipher = AES.new(key, AES.MODE_ECB)
-    encrypted = cipher.encrypt(text)
+    padded_text = text + (16 - len(text) % 16) * chr(16 - len(text) % 16)
+    encrypted = cipher.encrypt(padded_text.encode())
     return base64.b64encode(encrypted).decode()
 
-def decrypt_aes(ciphertext, key):
-    key = key[:16].encode('utf-8')
+# AES Decryption Function
+def decrypt_aes(encrypted_text, key):
+    key = pad_key(key).encode()
     cipher = AES.new(key, AES.MODE_ECB)
-    decrypted = cipher.decrypt(base64.b64decode(ciphertext))
-    return decrypted.decode().strip()
+    decrypted = cipher.decrypt(base64.b64decode(encrypted_text.encode()))
+    pad = decrypted[-1]
+    return decrypted[:-pad].decode()
