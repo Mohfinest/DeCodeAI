@@ -1,17 +1,24 @@
 import streamlit as st
 import os
-import requests
-
 from utils.encryption import encrypt_text, decrypt_text
 from utils.openrouter_ai import explain_encryption, translate_text
 
+# --- Page setup ---
 st.set_page_config(page_title="🔐 DeCodeAI", layout="centered")
 
-st.title("🔐 DeCodeAI – AI-Powered Encryption & Explanation Tool")
+# --- App Header ---
+st.markdown("""
+    <div style='text-align: center;'>
+        <h1>🔐 DeCodeAI</h1>
+        <h3 style='color: gray;'>AI-Powered Encryption & Explanation Tool</h3>
+        <p><strong>Built by MUSA HAMZA MUHAMMAD</strong></p>
+    </div>
+""", unsafe_allow_html=True)
 
+# --- Sidebar menu ---
 menu = st.sidebar.selectbox("Choose a feature", ["Encrypt", "Decrypt", "Explain Encryption", "Translate Text"])
 
-# --- Encrypt
+# --- Encrypt Feature ---
 if menu == "Encrypt":
     text = st.text_area("Enter text to encrypt")
     key = st.text_input("Enter a secret key (16/24/32 characters)", type="password")
@@ -23,7 +30,7 @@ if menu == "Encrypt":
             st.success("Encrypted Text:")
             st.code(encrypted)
 
-# --- Decrypt
+# --- Decrypt Feature ---
 elif menu == "Decrypt":
     encrypted = st.text_area("Enter encrypted text")
     key = st.text_input("Enter the same secret key", type="password")
@@ -35,7 +42,7 @@ elif menu == "Decrypt":
         except Exception as e:
             st.error(f"Decryption failed: {e}")
 
-# --- Explain Encryption
+# --- Explain Feature ---
 elif menu == "Explain Encryption":
     code = st.text_area("Paste encryption code to explain")
     if st.button("Explain with AI"):
@@ -44,7 +51,7 @@ elif menu == "Explain Encryption":
         st.info("Explanation:")
         st.write(result)
 
-# --- Translate
+# --- Translate Feature ---
 elif menu == "Translate Text":
     text = st.text_area("Enter text to translate")
     lang = st.text_input("Translate to (e.g. French, Yoruba, Spanish)")
@@ -53,3 +60,13 @@ elif menu == "Translate Text":
             translation = translate_text(text, lang)
         st.info("Translation:")
         st.write(translation)
+
+# --- Footer ---
+st.markdown("""---""")
+st.markdown("""
+    <div style='text-align: center; font-size: 14px;'>
+        Made with ❤️ by <strong>MUSA HAMZA MUHAMMAD</strong><br>
+        <a href="https://github.com/mohfinest" target="_blank">GitHub</a> |
+        <a href="https://linkedin.com/in/YOUR-LINKEDIN" target="_blank">LinkedIn</a>
+    </div>
+""", unsafe_allow_html=True)
