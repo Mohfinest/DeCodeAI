@@ -1,3 +1,4 @@
+import Crypto.Cipher  # <-- if it crashes here, it's still not installed
 import streamlit as st
 from utils.encryption import encrypt_aes, decrypt_aes
 from utils.gemini_ai import explain_encryption, translate_text, summarize_chat, explain_code
