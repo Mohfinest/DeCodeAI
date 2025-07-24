@@ -1,4 +1,7 @@
 import streamlit as st
+import os
+import requests
+
 from utils.encryption import encrypt_text, decrypt_text
 from utils.openrouter_ai import explain_encryption, translate_text
 
