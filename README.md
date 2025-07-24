@@ -1,4 +1,4 @@
-# 🔐 DeCodeAI
+# 🔐 DeCodeAI 
 
 **DeCodeAI** is a lightweight, AI-powered browser app for **encrypting, decrypting**, and most importantly — **understanding** encryption through natural language explanations. It uses **Gemini AI** (by Google) to make cryptography clear, multilingual, and interactive.
 
