@@ -1,29 +1,16 @@
-import google.generativeai as genai
 import os
+import google.generativeai as genai
 
-# Load Gemini API key from Streamlit secrets
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-# Generic Gemini prompt wrapper
-def ask_gemini(prompt, model="models/gemini-pro", temperature=0.7):
-    chat = genai.GenerativeModel(model).start_chat()
-    response = chat.send_message(prompt)
+def explain_encryption(code_snippet):
+    prompt = f"Explain the following encryption code in simple terms:\n{code_snippet}"
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(prompt)
     return response.text
 
-# Explain encrypted text
-def explain_encryption(cipher_text):
-    prompt = f"""You're an AI cryptography expert. Explain what this encrypted text might represent and how the encryption likely works:
-    
-    Encrypted data: {cipher_text}
-    
-    Give a simple, understandable explanation. If possible, guess the method (like AES or RSA)."""
-    return ask_gemini(prompt)
-
-# Translate content using AI
 def translate_text(text, target_language):
-    prompt = f"""Translate the following text into {target_language}:
-    
-    {text}
-    
-    Make sure it's accurate and culturally appropriate."""
-    return ask_gemini(prompt)
+    prompt = f"Translate this into {target_language}:\n\n{text}"
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(prompt)
+    return response.text
