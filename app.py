@@ -49,7 +49,7 @@ elif menu == "Explain Encryption":
 # --- Translate Feature ---
 elif menu == "Translate Text":
     text = st.text_area("Enter text to translate")
-    lang = st.text_input("Translate to (e.g. French, Yoruba, Spanish)")
+    lang = st.selectbox("Choose a language to translate to", ["Hausa", "Igbo", "Yoruba"])
     if st.button("Translate"):
         with st.spinner("Translating..."):
             translation = translate_text(text, lang)
