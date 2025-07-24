@@ -21,26 +21,34 @@ menu = st.sidebar.selectbox("Choose a feature", ["Encrypt", "Decrypt", "Explain 
 # --- Encrypt Feature ---
 if menu == "Encrypt":
     text = st.text_area("Enter text to encrypt")
-    key = st.text_input("Enter a secret key (16/24/32 characters)", type="password")
-    if st.button("Encrypt"):
-        if len(key) not in [16, 24, 32]:
-            st.error("Key must be 16, 24, or 32 characters.")
-        else:
-            encrypted = encrypt_text(text, key)
-            st.success("Encrypted Text:")
-            st.code(encrypted)
+    key = st.text_input("Enter a secret key (16/24/32 characters)", type="password").strip()
+
+if st.button("Encrypt"):
+    key_length = len(key)
+    if key_length not in [16, 24, 32]:
+        st.error(f"Key must be 16, 24, or 32 characters. Current: {key_length}")
+    elif not text:
+        st.error("Please enter some text to encrypt.")
+    else:
+        encrypted = encrypt_text(text, key)
+        st.success("Encrypted Text:")
+        st.code(encrypted)
 
 # --- Decrypt Feature ---
 elif menu == "Decrypt":
     encrypted = st.text_area("Enter encrypted text")
-    key = st.text_input("Enter the same secret key", type="password")
-    if st.button("Decrypt"):
-        try:
-            decrypted = decrypt_text(encrypted, key)
-            st.success("Decrypted Text:")
-            st.code(decrypted)
-        except Exception as e:
-            st.error(f"Decryption failed: {e}")
+    key = st.text_input("Enter a secret key (16/24/32 characters)", type="password").strip()
+
+if st.button("Encrypt"):
+    key_length = len(key)
+    if key_length not in [16, 24, 32]:
+        st.error(f"Key must be 16, 24, or 32 characters. Current: {key_length}")
+    elif not text:
+        st.error("Please enter some text to encrypt.")
+    else:
+        encrypted = encrypt_text(text, key)
+        st.success("Encrypted Text:")
+        st.code(encrypted)
 
 # --- Explain Feature ---
 elif menu == "Explain Encryption":
