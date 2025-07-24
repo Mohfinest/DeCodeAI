@@ -61,7 +61,7 @@ st.markdown("""---""")
 st.markdown("""
     <div style='text-align: center; font-size: 14px;'>
         Made with ❤️ by <strong>MUSA HAMZA MUHAMMAD</strong><br>
-        <a href="https://github.com/mohfinest" target="_blank">GitHub</a> |
-        <a href="https://linkedin.com/in/YOUR-LINKEDIN" target="_blank">LinkedIn</a>
+        <a href="https://github.com/hamzeeno35/DeCodeAI" target="_blank">GitHub</a> |
+        <a href="https://www.linkedin.com/in/hamza-musa-2aa2772b7" target="_blank">LinkedIn</a>
     </div>
 """, unsafe_allow_html=True)
