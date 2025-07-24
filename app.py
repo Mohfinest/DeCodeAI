@@ -20,38 +20,22 @@ menu = st.sidebar.selectbox("Choose a feature", ["Encrypt", "Decrypt", "Explain 
 
 # --- Encrypt Feature ---
 if menu == "Encrypt":
-    text = st.text_area("Enter text to encrypt")
-    key = st.text_input("Enter a secret key (16/24/32 characters)", type="password")
-
-    if st.button("Encrypt"):
-        key = key.strip()
-        key_length = len(key)
-
-        if key_length not in [16, 24, 32]:
-            st.error(f"❌ Key must be 16, 24, or 32 characters. You entered {key_length} characters.")
-        else:
-            encrypted = encrypt_text(text, key)
-            st.success("🔒 Encrypted Text:")
-            st.code(encrypted)
+    text = st.text_area("Enter text to encode (Base64)")
+    if st.button("Encode"):
+        encoded = encrypt_text(text)
+        st.success("Encoded Text:")
+        st.code(encoded)
 
 # --- Decrypt Feature ---
 elif menu == "Decrypt":
-    encrypted = st.text_area("Enter encrypted text")
-    key = st.text_input("Enter the same secret key", type="password")
-
-    if st.button("Decrypt"):
-        key = key.strip()
-        key_length = len(key)
-
-        if key_length not in [16, 24, 32]:
-            st.error(f"❌ Key must be 16, 24, or 32 characters. You entered {key_length} characters.")
-        else:
-            try:
-                decrypted = decrypt_text(encrypted, key)
-                st.success("🔓 Decrypted Text:")
-                st.code(decrypted)
-            except Exception as e:
-                st.error(f"Decryption failed: {e}")
+    encoded = st.text_area("Enter Base64-encoded text")
+    if st.button("Decode"):
+        try:
+            decoded = decrypt_text(encoded)
+            st.success("Decoded Text:")
+            st.code(decoded)
+        except Exception as e:
+            st.error(f"Decoding failed: {e}")
 
 # --- Explain Feature ---
 elif menu == "Explain Encryption":
