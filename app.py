@@ -21,7 +21,7 @@ menu = st.sidebar.selectbox("Choose a feature", ["Encrypt", "Decrypt", "Explain 
 # --- Encrypt Feature ---
 if menu == "Encrypt":
     text = st.text_area("Enter text to encrypt")
-    key = st.text_input("Enter a secret key (16/24/32 characters)", type="password", placeholder="e.g., 1234567890abcdef")
+    key = st.text_input("Enter a secret key (16/24/32 characters)", type="password")
 
     if st.button("Encrypt"):
         key = key.strip()
@@ -29,11 +29,9 @@ if menu == "Encrypt":
 
         if key_length not in [16, 24, 32]:
             st.error(f"❌ Key must be 16, 24, or 32 characters. You entered {key_length} characters.")
-        elif not text.strip():
-            st.error("❌ Please enter some text to encrypt.")
         else:
             encrypted = encrypt_text(text, key)
-            st.success("✅ Encrypted Text:")
+            st.success("🔒 Encrypted Text:")
             st.code(encrypted)
 
 # --- Decrypt Feature ---
@@ -43,44 +41,36 @@ elif menu == "Decrypt":
 
     if st.button("Decrypt"):
         key = key.strip()
-        if len(key) not in [16, 24, 32]:
-            st.error("❌ Key must be 16, 24, or 32 characters.")
-        elif not encrypted.strip():
-            st.error("❌ Please enter encrypted text.")
+        key_length = len(key)
+
+        if key_length not in [16, 24, 32]:
+            st.error(f"❌ Key must be 16, 24, or 32 characters. You entered {key_length} characters.")
         else:
             try:
                 decrypted = decrypt_text(encrypted, key)
-                st.success("✅ Decrypted Text:")
+                st.success("🔓 Decrypted Text:")
                 st.code(decrypted)
             except Exception as e:
-                st.error(f"❌ Decryption failed: {e}")
+                st.error(f"Decryption failed: {e}")
 
 # --- Explain Feature ---
 elif menu == "Explain Encryption":
     code = st.text_area("Paste encryption code to explain")
-
     if st.button("Explain with AI"):
-        if not code.strip():
-            st.error("❌ Please paste encryption code to explain.")
-        else:
-            with st.spinner("💡 Thinking..."):
-                result = explain_encryption(code)
-            st.info("🔍 Explanation:")
-            st.write(result)
+        with st.spinner("Thinking..."):
+            result = explain_encryption(code)
+        st.info("Explanation:")
+        st.write(result)
 
 # --- Translate Feature ---
 elif menu == "Translate Text":
     text = st.text_area("Enter text to translate")
     lang = st.text_input("Translate to (e.g. French, Yoruba, Spanish)")
-
     if st.button("Translate"):
-        if not text.strip() or not lang.strip():
-            st.error("❌ Both text and target language are required.")
-        else:
-            with st.spinner("🌍 Translating..."):
-                translation = translate_text(text, lang)
-            st.info("🌐 Translation:")
-            st.write(translation)
+        with st.spinner("Translating..."):
+            translation = translate_text(text, lang)
+        st.info("Translation:")
+        st.write(translation)
 
 # --- Footer ---
 st.markdown("""---""")
